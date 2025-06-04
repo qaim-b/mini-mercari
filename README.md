@@ -205,10 +205,3 @@ Use STAR format for stories: “Situation, Task, Action, Result.”
 It reflects Mercari’s values of ‘Go Bold’ (ML in production), ‘Move Fast’ (MVP-first, iterate), ‘All for One’ (documented, reusable, open source), and ‘Be a Pro’ (testing, clean code, real-world deployment).
 I’m excited to bring these mindsets to Mercari and help unlock new value for millions of users.”
 
----
-
-**Just copy-paste the block above. You’re fully loaded.**  
-- Use it for README, interviews, or project planning.  
-- When you finish one part, just message me “next step” and I’ll walk you through the next service or integration!
-
-Ready to ship this? You’re 10x closer to Mercari now, Beast.

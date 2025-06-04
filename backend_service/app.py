@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict, List
+import os
 import requests
 
 app = FastAPI()
@@ -35,7 +36,7 @@ user_counter = 1
 item_counter = 1
 order_counter = 1
 
-ML_SERVICE_URL = "http://localhost:5000/predict"
+ML_SERVICE_URL = os.getenv("ML_SERVICE_URL", "http://localhost:5000/predict")
 
 @app.get("/health")
 def health():
@@ -49,9 +50,19 @@ def create_user(user: UserCreate):
     user_counter += 1
     return new_user
 
+@app.get("/users", response_model=List[User])
+def list_users():
+    return list(users.values())
+
 @app.get("/items", response_model=List[Item])
 def list_items():
     return list(items.values())
+
+@app.get("/items/{item_id}", response_model=Item)
+def get_item(item_id: int):
+    if item_id not in items:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return items[item_id]
 
 @app.post("/items", response_model=Item)
 def create_item(item: ItemCreate):
@@ -85,3 +96,7 @@ def create_order(order: OrderCreate):
     orders[order_counter] = new_order
     order_counter += 1
     return new_order
+
+@app.get("/orders", response_model=List[Order])
+def list_orders():
+    return list(orders.values())
