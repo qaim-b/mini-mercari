@@ -13,6 +13,11 @@ Simple FastAPI API for the Mercari mini marketplace.
 - `GET /health` health check
 
 The service expects the ML microservice to be running and accessible via `ML_SERVICE_URL` (defaults to `http://localhost:5000/predict`).
+If your ML service runs on a different port, export `ML_SERVICE_URL` before starting:
+
+```bash
+export ML_SERVICE_URL=http://localhost:5001/predict
+```
 
 ## Running
 ```bash
