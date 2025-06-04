@@ -141,10 +141,11 @@ def predict():
     return jsonify({'predicted_price': round(float(pred), 2)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    # The ML API listens on port 5000
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 # Test with:
-curl -X POST http://localhost:5001/predict \
+curl -X POST http://localhost:5000/predict \
 -H "Content-Type: application/json" \
 -d '{"name":"Nike Air Max","item_description":"Good condition, size 9","category_name":"Men/Shoes/Sneakers"}'
 ```
