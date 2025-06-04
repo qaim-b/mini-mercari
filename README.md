@@ -70,10 +70,19 @@ mini-mercari/
 
 - **How:**  
   - Use Kaggle [Mercari Price Suggestion dataset](https://www.kaggle.com/competitions/mercari-price-suggestion-challenge/data).
+    The raw `train.tsv` is hundreds of megabytes, so **do not commit it to Git**.
+    Store the file outside the repository (e.g., download during setup or use
+    [Git LFS](https://git-lfs.github.com/) if you need versioning).
   - Data cleaning/EDA, combine fields into text, TF-IDF vectorization (baseline).
   - Model: RandomForestRegressor (baseline, robust), or XGBoost for improvement.
   - Save model/vectorizer (`joblib`).
   - REST API (Flask/FastAPI): `/predict` endpoint that takes JSON (name, description, category) and returns price.
+
+### Handling the Large Dataset
+
+The Kaggle file is far bigger than GitHub's 25 MB limit. Instead of committing
+`train.tsv`, either use Git LFS or keep the file in a separate storage service
+(S3, Google Drive, etc.) and instruct contributors to download it during setup.
 
 - **Skills Demonstrated:**  
   - Data science workflow, model deployment, API design.
