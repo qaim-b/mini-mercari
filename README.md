@@ -1,53 +1,13 @@
-# 🟦 Mercari Mini Marketplace (Full-Stack SWE Portfolio Project)
+# 🟦 Mini Marketplace (Full-Stack SWE Portfolio Project)
 
 ## 🚀 Project Goal
-Build a **miniature Mercari marketplace** that demonstrates:
-- **Machine Learning microservice**: Suggests prices for secondhand items (like Mercari’s real platform).
+Build a **miniature marketplace** that demonstrates:
+- **Machine Learning microservice**: Suggests prices for secondhand items.
 - **Backend API**: Handles users, items, orders, and connects to ML microservice for price prediction.
 - **Android client** (or web UI): Lets users upload/list/search items and get price suggestions, using your backend and ML.
-- Modular “microservice” structure—mirrors real-world engineering at Mercari and top tech companies.
+- Modular microservice structure—mirrors real-world engineering at top tech companies.
 
----
-
-## 👔 Application/Interview Context
-
-**Who you are:**  
-- Final-year undergrad, University of Malaya (graduating Sept 2025)  
-- Incoming Master’s at University of Tokyo (MEXT, Oct 2025)  
-- Applying for Mercari Software Engineer Internship in Tokyo  
-- Skills: Python, Java, JavaScript, React, Node, SQL, MongoDB, Docker, AWS, ML, ROS2
-
-**What you want to show:**  
-- Teamwork, product thinking, “not just code”  
-- Growth, humility, user-focus  
-- You can deliver real value to users—*not* just “homework” code
-
----
-
-## 🏆 Mercari’s Mission, Values, and What They Want
-
-- **Mission:**  
-  “Circulate all forms of value—goods, skills, time, digital content, knowledge—to unleash everyone’s potential.”
-
-- **Values:**  
-  - **Go Bold:** Take risks, innovate, learn from failure, share lessons.
-  - **All for One:** Team over ego, respect differences, build trust, collaborate.
-  - **Be a Pro:** Skill, responsibility, learning, own your outcomes, speed > perfection.
-  - **Move Fast:** Avoid endless debate, act quickly, iterate, learn by doing.
-
-- **Engineering Mindset:**  
-  - Passion for product/user experience  
-  - Grow together (help/share, open source, mentor/learn)  
-  - Solve through mechanisms (root cause, scalable solutions)  
-  - Collaborate openly (transparent, cross-team, doc everything)
-
-- **What to show in this project:**  
-  - Direct impact for users (ML helps sellers price items, backend supports the flow, Android makes it mobile and user-friendly)
-  - Teamwork, documentation, communication (open source, clean README, video demo if possible)
-  - Iterative mindset (“Started simple, improved after user/testing feedback”)
-  - “Mini Mercari” mirrors their architecture—shows you think like a Mercari engineer
-
----
+This project is my initiative to practice full-stack development across machine learning, backend services, and mobile UI.
 
 ## 🏗️ Project Structure & Plan
 
@@ -69,13 +29,13 @@ mini-mercari/
   Deploy an ML model as a REST API that predicts the price of an item, given title, description, category.
 
 - **How:**  
-  - Use Kaggle [Mercari Price Suggestion dataset](https://www.kaggle.com/competitions/mercari-price-suggestion-challenge/data).
+  - Use the Kaggle [Price Suggestion dataset](https://www.kaggle.com/competitions/mercari-price-suggestion-challenge/data).
   - Data cleaning/EDA, combine fields into text, TF-IDF vectorization (baseline).
   - Model: RandomForestRegressor (baseline, robust), or XGBoost for improvement.
   - Save model/vectorizer (`joblib`).
   - REST API (Flask/FastAPI): `/predict` endpoint that takes JSON (name, description, category) and returns price.
 
-- **Skills Demonstrated:**  
+- **Skills Used:**  
   - Data science workflow, model deployment, API design.
 
 ---
@@ -111,17 +71,17 @@ mini-mercari/
 
 ---
 
-## 📝 README/Portfolio/Interview Story
+## 📝 README/Portfolio Story
 
-- “I built a modular mini-marketplace, inspired by Mercari’s mission to unlock value and help users price secondhand goods fairly.  
-I designed and deployed an ML price suggestion microservice, integrated it into a scalable backend API, and built a mobile (Android) client—mirroring Mercari’s microservices architecture and focus on user value.  
-I open-sourced each part, documented my learnings, and iterated based on feedback, embodying Mercari’s ‘Go Bold,’ ‘Move Fast,’ and ‘All for One’ values.”
+- I built a modular mini-marketplace to help users price secondhand goods fairly.
+I designed and deployed an ML price suggestion microservice, integrated it into a scalable backend API, and built a mobile (Android) client with a focus on user value.
+I open-sourced each part, documented my learnings, and iterated based on feedback, emphasizing bold experimentation, fast iteration, teamwork, and professionalism.
 
 ---
 
 ## 📄 Example Résumé Bullets
 
-- Developed an ML-powered API that predicts prices for secondhand items, modeled after Mercari’s real user flow.
+- Developed an ML-powered API that predicts prices for secondhand items.
 - Designed a microservices backend for a marketplace, with clean REST APIs and CI/CD integration.
 - Created an Android app for listing and discovering items, focusing on user experience and seamless price prediction.
 
@@ -137,7 +97,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install pandas scikit-learn flask joblib
 
-# Download and extract train.tsv from Kaggle Mercari Price Suggestion
+# Download and extract train.tsv from the Kaggle Price Suggestion dataset
 # Place train.tsv in ml_service/
 
 # Sample EDA/Training (in eda_and_training.ipynb):
@@ -200,8 +160,8 @@ Document every part with a README, screenshots, (video demo if possible).
 
 Use STAR format for stories: “Situation, Task, Action, Result.”
 
-🏅 **Mercari Interview/README “North Star”**
-“This project shows my ability to build and integrate ML, backend, and mobile services, always thinking about the user and business value.
-It reflects Mercari’s values of ‘Go Bold’ (ML in production), ‘Move Fast’ (MVP-first, iterate), ‘All for One’ (documented, reusable, open source), and ‘Be a Pro’ (testing, clean code, real-world deployment).
-I’m excited to bring these mindsets to Mercari and help unlock new value for millions of users.”
+🏅 **Portfolio README “North Star”**
+This project shows my ability to build and integrate ML, backend, and mobile services, always thinking about the user and business value.
+It reflects principles of bold experimentation, fast iteration, teamwork, and professional software practices.
+I’m excited to bring these mindsets to future opportunities and help unlock value for users.
 
