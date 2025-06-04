@@ -7,7 +7,7 @@ Build a **miniature marketplace** that demonstrates:
 - **Android client** (or web UI): Lets users upload/list/search items and get price suggestions, using your backend and ML.
 - Modular microservice structure—mirrors real-world engineering at top tech companies.
 
-This project is my own initiative to practice full-stack development across machine learning, backend services, and mobile UI.
+This project is my initiative to practice full-stack development across machine learning, backend services, and mobile UI.
 
 ## 🏗️ Project Structure & Plan
 
@@ -35,7 +35,7 @@ mini-mercari/
   - Save model/vectorizer (`joblib`).
   - REST API (Flask/FastAPI): `/predict` endpoint that takes JSON (name, description, category) and returns price.
 
-- **Skills Demonstrated:**  
+- **Skills Used:**  
   - Data science workflow, model deployment, API design.
 
 ---
@@ -73,9 +73,9 @@ mini-mercari/
 
 ## 📝 README/Portfolio Story
 
-- “I built a modular mini-marketplace to help users price secondhand goods fairly.
+- I built a modular mini-marketplace to help users price secondhand goods fairly.
 I designed and deployed an ML price suggestion microservice, integrated it into a scalable backend API, and built a mobile (Android) client with a focus on user value.
-I open-sourced each part, documented my learnings, and iterated based on feedback, emphasizing bold experimentation, fast iteration, teamwork, and professionalism.”
+I open-sourced each part, documented my learnings, and iterated based on feedback, emphasizing bold experimentation, fast iteration, teamwork, and professionalism.
 
 ---
 
@@ -161,14 +161,7 @@ Document every part with a README, screenshots, (video demo if possible).
 Use STAR format for stories: “Situation, Task, Action, Result.”
 
 🏅 **Portfolio README “North Star”**
-“This project shows my ability to build and integrate ML, backend, and mobile services, always thinking about the user and business value.
+This project shows my ability to build and integrate ML, backend, and mobile services, always thinking about the user and business value.
 It reflects principles of bold experimentation, fast iteration, teamwork, and professional software practices.
-I’m excited to bring these mindsets to future opportunities and help unlock value for users.”
+I’m excited to bring these mindsets to future opportunities and help unlock value for users.
 
----
-
-**Just copy-paste the block above. You’re fully loaded.**  
-- Use it for README, interviews, or project planning.  
-- When you finish one part, just message me “next step” and I’ll walk you through the next service or integration!
-
-Ready to ship this? You’re 10x closer to your goal now, Beast.
