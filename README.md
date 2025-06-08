@@ -1,13 +1,14 @@
 # 🟦 Mini Marketplace (Full-Stack SWE Portfolio Project)
 
 ## 🚀 Project Goal
-Build a **miniature marketplace** that demonstrates:
+The object is to build a **miniature marketplace** that demonstrates:
 - **Machine Learning microservice**: Suggests prices for secondhand items.
 - **Backend API**: Handles users, items, orders, and connects to ML microservice for price prediction.
 - **Android client** (or web UI): Lets users upload/list/search items and get price suggestions, using your backend and ML.
 - Modular microservice structure—mirrors real-world engineering at top tech companies.
 
 This project is my initiative to practice full-stack development across machine learning, backend services, and mobile UI.
+For educational purposes.
 
 ## 🏗️ Project Structure & Plan
 
