@@ -1,4 +1,4 @@
-# 🟦 Mini Marketplace (Full-Stack SWE Portfolio Project)
+Mini Marketplace (Full-Stack SWE Portfolio Project)
 
 ## 🚀 Project Goal
 The objective is to build a **miniature marketplace** that demonstrates:
