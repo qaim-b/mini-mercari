@@ -1,15 +1,25 @@
 {
   "version": 2,
-  "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "destination": "/web_client/index.html"
+      "handle": "filesystem"
     },
     {
-      "source": "/(.*)",
-      "destination": "/web_client/$1"
+      "src": "^/$",
+      "dest": "/web_client/index.html"
+    },
+    {
+      "src": "^/web_client$",
+      "dest": "/web_client/index.html"
+    },
+    {
+      "src": "^/web_client/(.*)$",
+      "dest": "/web_client/$1"
+    },
+    {
+      "src": "^/(.*)$",
+      "dest": "/web_client/$1"
     }
   ],
   "headers": [
