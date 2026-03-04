@@ -195,6 +195,30 @@ button:hover {
     width: 100%;
 }
 
+.mercari-link {
+    margin-top: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 10px;
+    border: 1px solid #dccdc1;
+    padding: 0.58rem 0.72rem;
+    background: #fff7ef;
+    color: #8f3c18;
+    transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.mercari-link:hover {
+    transform: translateY(-1px);
+    border-color: #d9a283;
+}
+
+.hidden {
+    display: none;
+}
+
 .status {
     min-height: 1.2rem;
     font-size: 0.88rem;
@@ -245,6 +269,11 @@ button:hover {
     font-size: 1.08rem;
     font-weight: 800;
     color: var(--brand);
+}
+
+.card-link {
+    margin-top: 0.6rem;
+    width: 100%;
 }
 
 .empty-state {

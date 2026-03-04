@@ -5,15 +5,24 @@ const sortEl = document.getElementById("sort");
 const refreshBtnEl = document.getElementById("refreshBtn");
 const statusEl = document.getElementById("status");
 const apiBaseEl = document.getElementById("apiBase");
+const mercariRegionEl = document.getElementById("mercariRegion");
+const openMercariSearchLinkEl = document.getElementById("openMercariSearchLink");
 const itemsCountEl = document.getElementById("itemsCount");
 const avgPriceEl = document.getElementById("avgPrice");
 const createItemFormEl = document.getElementById("createItemForm");
+const createdMercariLinkEl = document.getElementById("createdMercariLink");
 
 const itemNameEl = document.getElementById("itemName");
 const itemCategoryEl = document.getElementById("itemCategory");
 const itemDescriptionEl = document.getElementById("itemDescription");
 
 const API_BASE_STORAGE_KEY = "mini-mercari-api-base";
+const MERCARI_REGION_STORAGE_KEY = "mini-mercari-mercari-region";
+
+const MERCARI_SEARCH_BASE = {
+    jp: "https://jp.mercari.com/search?keyword=",
+    us: "https://www.mercari.com/search/?keyword=",
+};
 
 function escapeHtml(value) {
     return value
@@ -26,6 +35,20 @@ function escapeHtml(value) {
 
 function getApiBase() {
     return apiBaseEl.value.trim().replace(/\/$/, "");
+}
+
+function getMercariRegion() {
+    return MERCARI_SEARCH_BASE[mercariRegionEl.value] ? mercariRegionEl.value : "jp";
+}
+
+function buildMercariSearchUrl(query = "", category = "") {
+    const base = MERCARI_SEARCH_BASE[getMercariRegion()];
+    const mergedQuery = [query.trim(), category.trim()].filter(Boolean).join(" ");
+    return `${base}${encodeURIComponent(mergedQuery || "mercari")}`;
+}
+
+function updateGlobalMercariLink() {
+    openMercariSearchLinkEl.href = buildMercariSearchUrl(searchEl.value, categoryEl.value);
 }
 
 function setStatus(message, isError = false) {
@@ -61,6 +84,7 @@ function renderItems(items) {
             <h3>${escapeHtml(item.name)}</h3>
             <p>${escapeHtml(item.description)}</p>
             <div class="price">$${Number(item.price).toFixed(2)}</div>
+            <a class="mercari-link card-link" href="${buildMercariSearchUrl(item.name, item.category)}" target="_blank" rel="noopener noreferrer">View Similar on Mercari</a>
         `;
         itemsEl.appendChild(card);
     });
@@ -95,6 +119,7 @@ async function refreshItems() {
         const items = await fetchItems();
         renderItems(items);
         setStatus(`Loaded ${items.length} item(s).`);
+        updateGlobalMercariLink();
     } catch (error) {
         renderItems([]);
         setStatus(error.message, true);
@@ -107,9 +132,11 @@ async function createItem(event) {
     event.preventDefault();
     setStatus("Creating listing...");
 
+    const name = itemNameEl.value.trim();
+    const category = itemCategoryEl.value.trim();
     const payload = {
-        name: itemNameEl.value.trim(),
-        category: itemCategoryEl.value.trim(),
+        name,
+        category,
         description: itemDescriptionEl.value.trim(),
     };
 
@@ -128,13 +155,27 @@ async function createItem(event) {
     itemNameEl.value = "";
     itemCategoryEl.value = "";
     itemDescriptionEl.value = "";
+
+    createdMercariLinkEl.href = buildMercariSearchUrl(name, category);
+    createdMercariLinkEl.classList.remove("hidden");
 }
 
 function wireEvents() {
     refreshBtnEl.addEventListener("click", refreshItems);
-    searchEl.addEventListener("input", refreshItems);
-    categoryEl.addEventListener("input", refreshItems);
+    searchEl.addEventListener("input", () => {
+        updateGlobalMercariLink();
+        refreshItems();
+    });
+    categoryEl.addEventListener("input", () => {
+        updateGlobalMercariLink();
+        refreshItems();
+    });
     sortEl.addEventListener("change", refreshItems);
+    mercariRegionEl.addEventListener("change", () => {
+        localStorage.setItem(MERCARI_REGION_STORAGE_KEY, getMercariRegion());
+        updateGlobalMercariLink();
+        refreshItems();
+    });
 
     apiBaseEl.addEventListener("change", () => {
         localStorage.setItem(API_BASE_STORAGE_KEY, getApiBase());
@@ -166,8 +207,17 @@ function initApiBase() {
     }
 }
 
+function initMercariRegion() {
+    const stored = localStorage.getItem(MERCARI_REGION_STORAGE_KEY);
+    if (stored && MERCARI_SEARCH_BASE[stored]) {
+        mercariRegionEl.value = stored;
+    }
+    updateGlobalMercariLink();
+}
+
 function init() {
     initApiBase();
+    initMercariRegion();
     wireEvents();
     refreshItems();
 }

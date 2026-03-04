@@ -56,7 +56,15 @@
                     </select>
                 </div>
             </div>
+            <div class="field">
+                <label for="mercariRegion">Mercari Region</label>
+                <select id="mercariRegion">
+                    <option value="jp">Japan</option>
+                    <option value="us">US</option>
+                </select>
+            </div>
             <button id="refreshBtn">Refresh Results</button>
+            <a id="openMercariSearchLink" class="mercari-link" href="#" target="_blank" rel="noopener noreferrer">Open Current Search on Mercari</a>
             <p id="status" class="status" aria-live="polite"></p>
         </section>
 
@@ -77,6 +85,7 @@
                 </div>
                 <button type="submit" class="primary">Create Listing</button>
             </form>
+            <a id="createdMercariLink" class="mercari-link hidden" href="#" target="_blank" rel="noopener noreferrer">Open this item search on Mercari</a>
         </section>
 
         <section class="panel panel-wide">
