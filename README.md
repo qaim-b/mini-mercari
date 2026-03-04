@@ -1,169 +1,104 @@
-Mini Marketplace (Full-Stack SWE Portfolio Project)
+# Mini Mercari
 
-## 🚀 Project Goal
-The objective is to build a **miniature marketplace** that demonstrates:
-- **Machine Learning microservice**: Suggests prices for secondhand items.
-- **Backend API**: Handles users, items, orders, and connects to ML microservice for price prediction.
-- **Android client** (or web UI): Lets users upload/list/search items and get price suggestions, using your backend and ML.
-- Modular microservice structure—mirrors real-world engineering at top tech companies.
+Production-oriented mini marketplace project with three working services:
+- `ml_service`: price suggestion microservice
+- `backend_service`: marketplace API (users, items, orders)
+- `web_client`: responsive frontend
 
-This project is my initiative to practice full-stack development across machine learning, backend services, and mobile UI.
-For educational purposes.
+## Architecture
+- Backend: FastAPI + SQLite with repository/service layering.
+- ML service: FastAPI rule-based estimator with stable `/predict` contract.
+- Frontend: Vanilla JS + modern CSS visual system.
+- Search data structure: in-memory token index for item discovery (`OOP + DSA` focus).
 
-## 🏗️ Project Structure & Plan
+## What Was Upgraded
+- Replaced backend global in-memory state with SQLite persistence.
+- Added typed request validation and safer error handling.
+- Added health/readiness endpoints for backend and ML.
+- Added resilient ML fallback estimator in backend.
+- Added backend tests for critical flows.
+- Rebuilt frontend UI/UX with filtering, sorting, item creation, and robust states.
+- Added environment templates and refreshed service docs.
 
-```
-mini-mercari/
-├── ml_service/ # ML microservice: price prediction (REST API)
-├── backend_service/ # Marketplace backend: users, items, orders, connects to ML
-├── android_app/ # Android client (optional: web_demo/ for Streamlit or React)
-├── README.md # This file!
-```
+## Quick Start
+Open three terminals.
 
----
-
-## 💻 Step-by-Step Technical Roadmap
-
-### 1. ML Price Suggestion Microservice
-
-- **Goal:**  
-  Deploy an ML model as a REST API that predicts the price of an item, given title, description, category.
-
-- **How:**  
-  - Use the Kaggle [Price Suggestion dataset](https://www.kaggle.com/competitions/mercari-price-suggestion-challenge/data).
-  - Data cleaning/EDA, combine fields into text, TF-IDF vectorization (baseline).
-  - Model: RandomForestRegressor (baseline, robust), or XGBoost for improvement.
-  - Save model/vectorizer (`joblib`).
-  - REST API (Flask/FastAPI): `/predict` endpoint that takes JSON (name, description, category) and returns price.
-
-- **Skills Used:**  
-  - Data science workflow, model deployment, API design.
-
----
-
-### 2. Backend Marketplace API (to add after ML)
-
-- **Goal:**  
-  Simple REST API for registering users, creating/listing items, creating orders, calling ML service for price suggestions.
-
-- **How:**  
-  - Node.js (Express) or Python (FastAPI)
-  - Database: MongoDB or PostgreSQL (MVP: start with in-memory if needed)
-  - Microservice: On item creation, calls ML `/predict` to suggest price.
-  - Clean API docs (OpenAPI/Swagger or markdown)
-
-- **Skills Demonstrated:**  
-  - Backend system design, microservice orchestration, teamwork/collaboration.
-
----
-
-### 3. Android (or Web) Client (to add last)
-
-- **Goal:**  
-  Android app to list items (photo, title, desc, category), fetch price suggestion, view/search marketplace.
-
-- **How:**  
-  - Kotlin (preferred) + Firebase/Auth, or connect directly to backend.
-  - UI: Simple, user-focused, clean Material Design.
-  - Calls backend/ML for price suggestion.
-
-- **Skills Demonstrated:**  
-  - Mobile dev, API integration, UX thinking.
-
----
-
-## 📝 README/Portfolio Story
-
-- I built a modular mini-marketplace to help users price secondhand goods fairly.
-I designed and deployed an ML price suggestion microservice, integrated it into a scalable backend API, and built a mobile (Android) client with a focus on user value.
-I open-sourced each part, documented my learnings, and iterated based on feedback, emphasizing bold experimentation, fast iteration, teamwork, and professionalism.
-
----
-
-## 📄 Example Résumé Bullets
-
-- Developed an ML-powered API that predicts prices for secondhand items.
-- Designed a microservices backend for a marketplace, with clean REST APIs and CI/CD integration.
-- Created an Android app for listing and discovering items, focusing on user experience and seamless price prediction.
-
----
-
-## 🛠️ Command/Code Scaffold (ML Service)
-
+1. ML service
 ```bash
-# Folder setup
-mkdir -p mini-mercari/ml_service
-cd mini-mercari/ml_service
-python3 -m venv venv
-source venv/bin/activate
-pip install pandas scikit-learn flask joblib
-
-# Download and extract train.tsv from the Kaggle Price Suggestion dataset
-# Place train.tsv in ml_service/
-
-# Sample EDA/Training (in eda_and_training.ipynb):
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
-import joblib
-
-df = pd.read_csv('train.tsv', sep='\t').dropna(subset=['name', 'item_description', 'category_name', 'price'])
-df['all_text'] = df['name'] + ' ' + df['item_description'] + ' ' + df['category_name']
-
-X = df['all_text']
-y = df['price']
-
-tfidf = TfidfVectorizer(max_features=10000)
-X_tfidf = tfidf.fit_transform(X)
-
-X_train, X_val, y_train, y_val = train_test_split(X_tfidf, y, test_size=0.2, random_state=42)
-
-model = RandomForestRegressor(n_estimators=50, n_jobs=-1)
-model.fit(X_train, y_train)
-joblib.dump(model, 'price_model.pkl')
-joblib.dump(tfidf, 'tfidf.pkl')
-
-# Sample Flask API (app.py):
-from flask import Flask, request, jsonify
-import joblib
-
-app = Flask(__name__)
-model = joblib.load('price_model.pkl')
-tfidf = joblib.load('tfidf.pkl')
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.json
-    text = f"{data['name']} {data['item_description']} {data['category_name']}"
-    X = tfidf.transform([text])
-    pred = model.predict(X)[0]
-    return jsonify({'predicted_price': round(float(pred), 2)})
-
-if __name__ == '__main__':
-    # The ML API listens on port 5000
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
-# Test with:
-curl -X POST http://localhost:5000/predict \
--H "Content-Type: application/json" \
--d '{"name":"Nike Air Max","item_description":"Good condition, size 9","category_name":"Men/Shoes/Sneakers"}'
+cd ml_service
+pip install -r requirements.txt
+uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 ```
 
-✅ **What to do next**
-Start with ML microservice: EDA, train model, deploy REST API.
+2. Backend service
+```bash
+cd backend_service
+pip install -r requirements.txt
+uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+```
 
-Once ML works, scaffold backend_service/ and start integrating.
+3. Web client
+```bash
+cd web_client
+python -m http.server 3000
+```
 
-Last, connect Android/web app.
+Open `http://localhost:3000`.
 
-Document every part with a README, screenshots, (video demo if possible).
+## Docker Compose
+Run all services with one command:
+```bash
+docker compose up --build
+```
 
-Use STAR format for stories: “Situation, Task, Action, Result.”
+Endpoints:
+- Web: `http://localhost:3000`
+- Backend: `http://localhost:8000/health`
+- ML: `http://localhost:5000/health`
 
-🏅 **Portfolio README “North Star”**
-This project shows my ability to build and integrate ML, backend, and mobile services, always thinking about the user and business value.
-It reflects principles of bold experimentation, fast iteration, teamwork, and professional software practices.
-I’m excited to bring these mindsets to future opportunities and help unlock value for users.
+## Deploy Web Client To Vercel
+1. Deploy backend first (for example Render/Railway/Fly) and note its base URL.
+2. Update `web_client/config.js`:
+```js
+window.APP_CONFIG = {
+    API_BASE_URL: "https://your-backend-service.example.com"
+};
+```
+3. Push changes to GitHub.
+4. Import this repo into Vercel and deploy.
+5. The included `vercel.json` serves the frontend from `web_client` at your Vercel root URL.
 
+## Deploy Backend/ML (Render Blueprint)
+1. Push repository to GitHub.
+2. In Render, create a new Blueprint and select this repo.
+3. Use `render.yaml` and set:
+- `ML_SERVICE_URL` on backend to your deployed ML URL + `/predict`
+- `CORS_ORIGINS` on backend to your Vercel URL
+4. After backend is live, set `web_client/config.js` `API_BASE_URL` and redeploy Vercel.
+
+## Backend Test
+```bash
+cd backend_service
+python -m pytest -q
+```
+
+## Next Production Steps
+1. Add authentication/authorization (JWT + role policies).
+2. Add Dockerfiles + docker-compose + CI pipeline.
+3. Move from SQLite to PostgreSQL for multi-instance deployment.
+4. Add observability (structured logs, metrics, tracing).
+5. Replace rule-based model with trained artifact + model monitoring.
+
+## Product Execution Kit (One-Go)
+For a complete adoption plan focused on smooth Mercari user switching and real usage, use:
+- `docs/00_EXECUTIVE_ONE_GO.md`
+- `docs/01_PRD_SELLER_LISTING_ASSISTANT.md`
+- `docs/02_USER_JOURNEYS_AND_SWITCH_FLOW.md`
+- `docs/03_SYSTEM_REQUIREMENTS_AND_NFR.md`
+- `docs/04_BACKLOG_P0_P1_P2.md`
+- `docs/05_SPRINT_PLAN_6_WEEKS.md`
+- `docs/06_METRICS_EXPERIMENTS_AND_DASHBOARD.md`
+- `docs/07_LAUNCH_RUNBOOK_AND_SUPPORT.md`
+- `docs/08_PROMPT_PACK_EXECUTION.md`
+- `docs/09_RISK_REGISTER_AND_MITIGATIONS.md`
+- `docs/10_DEFINITION_OF_DONE_AND_ACCEPTANCE.md`
