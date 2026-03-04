@@ -3,17 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Mercari</title>
+    <title>Mini Mercari Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Mini Mercari</h1>
-        <input type="text" id="search" placeholder="Search items...">
+    <div class="backdrop-orb orb-1"></div>
+    <div class="backdrop-orb orb-2"></div>
+
+    <header class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow">Mini Mercari 2.0</p>
+            <h1>Buy and sell in a marketplace that feels premium.</h1>
+            <p class="subtitle">Fast listing. Smart pricing. Clean discovery.</p>
+        </div>
+        <div class="hero-stats">
+            <article class="stat">
+                <span id="itemsCount">0</span>
+                <p>Live Items</p>
+            </article>
+            <article class="stat">
+                <span id="avgPrice">$0</span>
+                <p>Average Price</p>
+            </article>
+        </div>
     </header>
-    <main>
-        <div id="items" class="grid"></div>
+
+    <main class="layout">
+        <section class="panel controls">
+            <h2>Discover</h2>
+            <div class="field">
+                <label for="apiBase">Backend URL</label>
+                <input id="apiBase" type="text" value="http://localhost:8000" />
+            </div>
+            <div class="field">
+                <label for="search">Search Items</label>
+                <input id="search" type="text" placeholder="Try: nike, vintage, electronics" />
+            </div>
+            <div class="inline-fields">
+                <div class="field">
+                    <label for="category">Category</label>
+                    <input id="category" type="text" placeholder="fashion" />
+                </div>
+                <div class="field">
+                    <label for="sort">Sort</label>
+                    <select id="sort">
+                        <option value="newest">Newest</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+            <button id="refreshBtn">Refresh Results</button>
+            <p id="status" class="status" aria-live="polite"></p>
+        </section>
+
+        <section class="panel">
+            <h2>List an Item</h2>
+            <form id="createItemForm" class="create-form">
+                <div class="field">
+                    <label for="itemName">Item Name</label>
+                    <input id="itemName" required minlength="2" maxlength="120" />
+                </div>
+                <div class="field">
+                    <label for="itemCategory">Category</label>
+                    <input id="itemCategory" required minlength="2" maxlength="80" />
+                </div>
+                <div class="field">
+                    <label for="itemDescription">Description</label>
+                    <textarea id="itemDescription" rows="3" required minlength="4" maxlength="2000"></textarea>
+                </div>
+                <button type="submit" class="primary">Create Listing</button>
+            </form>
+        </section>
+
+        <section class="panel panel-wide">
+            <div class="items-head">
+                <h2>Marketplace Feed</h2>
+            </div>
+            <div id="items" class="grid"></div>
+        </section>
     </main>
+
+    <script src="config.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
